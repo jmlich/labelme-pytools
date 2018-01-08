@@ -28,8 +28,6 @@ if __name__ == "__main__":
     # dictionary colors[tag] = color
     colors = {}
 
-    i = 0
-
     for obj in root.findall('./object'):
         coords = []
         for pt in obj.findall('./polygon/pt'):
@@ -42,15 +40,12 @@ if __name__ == "__main__":
         color = colors[obj_name];
 
 
-        i = i + 1
-
-
         poly = np.array(coords)
         cv2.fillPoly(overlay, [poly], color)
         cv2.fillPoly(mask, [poly], color)
         cv2.polylines(output, [poly], 1, color)
 
-        print (i, obj_name, color, coords)
+        print (obj_name, color, coords)
 
     print("colors", colors)
 

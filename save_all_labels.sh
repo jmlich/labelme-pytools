@@ -15,7 +15,7 @@ while IFS= read -r -d $'\0' xml; do
     fi
 
     echo "Loading $(basename "$img") $(basename "$xml")"
-    ./show_labelme_save_mask.py "$img" "$xml" "$out" > /dev/null
+    ./show_labelme_save.py "$img" "$xml" "$out" > /dev/null
 
 done < <(find "$xmldir" -type f -name '*.xml' -print0)
 
