@@ -1,4 +1,4 @@
-Some python tools to work with annotation created with [labelme](labelme.csail.mit.edu/)
+Some python tools to work with annotation created with [labelme](http://labelme.csail.mit.edu/)
 
 usage: show_labelme.py image.jpg labelme.xml
 
