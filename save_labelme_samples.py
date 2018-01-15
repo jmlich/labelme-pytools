@@ -66,7 +66,7 @@ if __name__ == "__main__":
     width=(int)((img.shape[1])/16 - 3)
     levels = math.floor ( max(math.log2(height), math.log2(width)) )
 
-    for level in range(1, levels):
+    for level in range(0, levels):
         scale = math.pow(2, level)
         height=(int)(((img.shape[0])/16/scale - 3))
         width=(int)(((img.shape[1])/16/scale - 3))
