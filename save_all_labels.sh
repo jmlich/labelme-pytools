@@ -10,7 +10,7 @@ while IFS= read -r -d $'\0' xml; do
     img="$imgdir/$(basename "$xml" .xml).jpg"
     out="$outdir/$(basename "$xml" .xml).jpg"
     if [ ! -f "$img" ]; then
-        echo "Error: Image $(basename $img) doesn't exists..." >&2
+        echo "Error: Image $(basename "$img") doesn't exists..." >&2
         continue
     fi
 

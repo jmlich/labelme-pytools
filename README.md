@@ -220,6 +220,8 @@ usage: save_labelme_samples.py image.jpg labelme.xml outputdir class
 - walk over image with window 48x48 and step 16x16
 - check if center pixel is in class defined in argv
 - renders every such region in separate picture
+- downscale twice and repeat when possible
+
 
 ![Sample1](https://git.fit.vutbr.cz/imlich/labelme-pytools/raw/master/data/Samples/000092_0.jpg)
 ![Sample2](https://git.fit.vutbr.cz/imlich/labelme-pytools/raw/master/data/Samples/000092_100.jpg)

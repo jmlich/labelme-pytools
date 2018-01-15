@@ -1,10 +1,19 @@
 #!/usr/bin/python3
 
+"""
+- walk over image with window 48x48 and step 16x16
+- check if center pixel is in class defined in argv
+- renders every such region in separate picture
+- downscale twice and repeat when possible
+
+"""
+
 import cv2
 import numpy as np
 import xml.etree.ElementTree as ET
 import sys
 import os
+import math
 
 if __name__ == "__main__":
 
@@ -34,6 +43,8 @@ if __name__ == "__main__":
     sample_prefix = os.path.splitext(os.path.basename(img_filename))[0]
     sample_counter = 0
 
+    # prepare mask image
+
     for obj in root.findall('./object'):
         coords = []
         for pt in obj.findall('./polygon/pt'):
@@ -51,27 +62,41 @@ if __name__ == "__main__":
 
 #        print (obj_name, color, coords)
 
-    height=(int)((img.shape[0])/16) - 3
-    width=(int)((img.shape[1])/16) - 3
-    for y in range(0, height):
-        for x in range(0, width):
-            roix=x*16
-            roiy=y*16
-            mask_point=mask[roiy+24, roix+24]
+    height=(int)((img.shape[0])/16 - 3)
+    width=(int)((img.shape[1])/16 - 3)
+    levels = math.floor ( max(math.log2(height), math.log2(width)) )
 
-            if (mask_point[0] > 0):
-                roi=img[roiy:roiy+48, roix:roix+48]
-                sample_filename = ("{}/{}_{}.jpg".format(out_dir, sample_prefix, sample_counter))
-                cv2.imwrite(sample_filename, roi)
-                sample_counter += 1;
+    for level in range(1, levels):
+        scale = math.pow(2, level)
+        height=(int)(((img.shape[0])/16/scale - 3))
+        width=(int)(((img.shape[1])/16/scale - 3))
 
+        if height <= 0 or width <= 0:
+            break;
 
-#            print(mask_point[0])
-#            if (mask_point[0] > 0):
-#                sys.stdout.write("X")
-#            else:
-#                sys.stdout.write(" ")
-#        print("\n")
+#        print("{}x{}x{}".format(width,height, scale))
+
+        for y in range(0, height):
+            for x in range(0, width):
+                roix=(int)(x*16*scale)
+                roiy=(int)(y*16*scale)
+                mask_point_x = (int)(roix+16*2*scale)
+                mask_point_y = (int)(roiy+16*2*scale)
+                mask_point=mask[mask_point_y, mask_point_x]
+#                if (mask_point[0] > 0):
+#                    sys.stdout.write("X")
+#                else:
+#                    sys.stdout.write(" ")
+                if (mask_point[0] > 0):
+                    x2 = (int)(roix+16*3*scale)
+                    y2 = (int)(roiy+16*3*scale)
+                    roi=img[roiy:y2, roix:x2]
+
+                    sample_filename = ("{}/{}_{}.jpg".format(out_dir, sample_prefix, sample_counter))
+                    cv2.imwrite(sample_filename, cv2.resize(roi, (48, 48)))
+                    sample_counter += 1
+
+#            print("")
 
     print(sample_counter)
 
