@@ -2,7 +2,7 @@ Some python tools to work with annotation created with [labelme](http://labelme.
 
 # show_labelme
 
-Tool shows image with labels.
+Tool shows image with labels on the screen.
 
 Example of input image: 
 ![Input](https://git.fit.vutbr.cz/imlich/labelme-pytools/raw/master/data/Image/000092.jpg)
@@ -207,17 +207,26 @@ usage: show_labelme.py image.jpg labelme.xml
 
 # save_labelme
 
-Tool
+Tool renders same image as show_labelme, but into output.jpg
 
 usage: save_labelme.py image.jpg labelme.xml output.jpg
 
 - e.g. save_all_labels.sh
 
-
-
 # save_labelme_samples
 
-usage: save_labelme_samples.py image.jpg labelme.xml output.jpg
+usage: save_labelme_samples.py image.jpg labelme.xml outputdir class
 
-- test_samples.sh
-- save_all_samples.sh
+- walk over image with window 48x48 and step 16x16
+- check if center pixel is in class defined in argv
+- renders every such region in separate picture
+
+![Sample1](https://git.fit.vutbr.cz/imlich/labelme-pytools/raw/master/data/Samples/000092_0.jpg)
+![Sample2](https://git.fit.vutbr.cz/imlich/labelme-pytools/raw/master/data/Samples/000092_100.jpg)
+![Sample3](https://git.fit.vutbr.cz/imlich/labelme-pytools/raw/master/data/Samples/000092_10.jpg)
+![Sample4](https://git.fit.vutbr.cz/imlich/labelme-pytools/raw/master/data/Samples/000092_1.jpg)
+
+
+- e.g. test_samples.sh
+- e.g. save_all_samples.sh
+

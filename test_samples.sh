@@ -1,7 +1,5 @@
 #!/bin/bash
-mkdir -p '/home/jmlich/workspace/fire/labelme-pytools/out_samples'
-./save_labelme_samples.py '/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Images/fire/000092.jpg' '/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Annotations/fire/000092.xml' '/home/jmlich/workspace/fire/labelme-pytools/out_samples' 'fire'
-./save_labelme_samples.py '/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Images/fire/000570.jpg' '/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Annotations/fire/000570.xml' '/home/jmlich/workspace/fire/labelme-pytools/out_samples' 'fire'
-
-#./show_labelme_save_mask.py '/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Images/fire/000092.jpg' '/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Annotations/fire/000092.xml' './local1.jpg'
-#./show_labelme_save_mask.py '/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Images/fire/000570.jpg' '/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Annotations/fire/000570.xml' './local2.jpg'
+outdir="/home/jmlich/workspace/fire/labelme-pytools/data/Samples"
+mkdir -p "$outdir"
+./save_labelme_samples.py '/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Images/fire/000092.jpg' '/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Annotations/fire/000092.xml' "$outdir" 'fire'
+./save_labelme_samples.py '/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Images/fire/000570.jpg' '/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Annotations/fire/000570.xml' "$outdir" 'fire'
