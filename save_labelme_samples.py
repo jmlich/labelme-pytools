@@ -21,6 +21,8 @@ if __name__ == "__main__":
         print ("usage: {0} image.jpg labelme.xml outdir label".format(sys.argv[0]))
         sys.exit(1)
 
+    NON_ZERO_RATIO_THRESHOLD = 80
+
     img_filename = sys.argv[1]
     xml_filename = sys.argv[2]
     out_dir = sys.argv[3]
@@ -34,7 +36,7 @@ if __name__ == "__main__":
     polys = []
     colors = []
 
-    mask = np.zeros(img.shape)
+    mask = np.zeros((img.shape[0], img.shape[1], 1))
     output = img.copy()
     overlay = img.copy()
 
@@ -42,6 +44,7 @@ if __name__ == "__main__":
     color = (255,255,255)
     sample_prefix = os.path.splitext(os.path.basename(img_filename))[0]
     sample_counter = 0
+    sample_center = 0
 
     # prepare mask image
 
@@ -80,25 +83,32 @@ if __name__ == "__main__":
             for x in range(0, width):
                 roix=(int)(x*16*scale)
                 roiy=(int)(y*16*scale)
+                x2 = (int)(roix+16*3*scale)
+                y2 = (int)(roiy+16*3*scale)
+
+                mask_roi=mask[roiy:y2, roix:x2]
+                mask_roi = cv2.resize(mask_roi, (48, 48) )
+
+                roi=img[roiy:y2, roix:x2]
+                roi=cv2.resize(roi, (48, 48))
+
+                non_zero = cv2.countNonZero(mask_roi)
+                non_zero_ratio = non_zero / mask_roi.size * 100
+
                 mask_point_x = (int)(roix+16*2*scale)
                 mask_point_y = (int)(roiy+16*2*scale)
                 mask_point=mask[mask_point_y, mask_point_x]
-#                if (mask_point[0] > 0):
-#                    sys.stdout.write("X")
-#                else:
-#                    sys.stdout.write(" ")
                 if (mask_point[0] > 0):
-                    x2 = (int)(roix+16*3*scale)
-                    y2 = (int)(roiy+16*3*scale)
-                    roi=img[roiy:y2, roix:x2]
+                    sample_center += 1
 
+                if (non_zero_ratio >= NON_ZERO_RATIO_THRESHOLD):
                     sample_filename = ("{}/{}_{}.jpg".format(out_dir, sample_prefix, sample_counter))
-                    cv2.imwrite(sample_filename, cv2.resize(roi, (48, 48)))
+                    cv2.imwrite(sample_filename, roi)
                     sample_counter += 1
 
 #            print("")
 
-    print(sample_counter)
+    print("{}%: {}; center: {}".format(NON_ZERO_RATIO_THRESHOLD, sample_counter, sample_center))
 
 #    alpha = 0.3
 #    cv2.addWeighted(overlay, alpha, output, 1 - alpha, 0, output)
