@@ -1,8 +1,8 @@
 #!/bin/bash
 imgdir='/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Images'
 xmldir='/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Annotations'
-outdir='/var/www/html/fire/flick-fire-labelme'
-maskdir='/var/www/html/fire/flick-fire-labelme-mask'
+outdir='/var/www/html/fire/dataset-fire-labelme'
+maskdir='/var/www/html/fire/dataset-fire-labelme-mask'
 mkdir -p "$outdir"
 mkdir -p "$maskdir"
 
@@ -31,8 +31,6 @@ while IFS= read -r -d $'\0' xml; do
     mkdir -p "$outdirfull"
     mkdir -p "$maskdirfull"
 
-
-    echo "+ ./save_labelme.py \"$img\" \"$xml\" \"$out\" \"$mask\""
     ./save_labelme.py "$img" "$xml" "$out" "$mask" #> /dev/null
 
 done < <(find "$xmldir" -type f -name '*.xml' -print0)
