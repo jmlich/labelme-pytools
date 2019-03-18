@@ -21,7 +21,7 @@ if __name__ == "__main__":
         print ("usage: {0} image.jpg labelme.xml outdir label".format(sys.argv[0]))
         sys.exit(1)
 
-    NON_ZERO_RATIO_THRESHOLD = 80
+    NON_ZERO_RATIO_THRESHOLD = 20
 
     img_filename = sys.argv[1]
     xml_filename = sys.argv[2]
