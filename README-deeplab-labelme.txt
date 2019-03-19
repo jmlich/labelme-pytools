@@ -1,0 +1,11 @@
+- create dataset using labelme
+  - https://github.com/CSAILVision/LabelMeAnnotationTool.git
+  - data are in Images/ + Annotation/
+- export Annotation from vector data to raster data
+  - save_all_labels.sh
+- resize images / annotations to reasonable size
+  - crop_orig_labels.sh
+- prepare negative dataset (SUN dataset in my case)
+  - crop_negative_labels.sh
+- create list of data (list of images in training and testing set)
+  - prepare_list_of_images.sh
