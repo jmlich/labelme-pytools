@@ -25,11 +25,22 @@ while IFS= read -r -d $'\0' xml; do
 
     if [ ! -f "$img" ]; then
         echo "Error: Image '$img' doesn't exists..." >&2
+#        rm -f "$xml"
         continue
     fi
 
     mkdir -p "$outdirfull"
     mkdir -p "$maskdirfull"
+
+    if [ -f "$out" ]; then
+        echo -n "+"
+        continue;
+    fi
+
+    if [ -f "$mask" ]; then
+        echo -n "*"
+        continue;
+    fi
 
     ./save_labelme.py "$img" "$xml" "$out" "$mask" #> /dev/null
 
