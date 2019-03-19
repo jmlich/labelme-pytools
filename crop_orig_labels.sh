@@ -1,24 +1,4 @@
 #!/bin/bash
-
-#IN=Images
-#OUT=FIRE_512
-
-#prepare_ds () {
-
-#    infile="$1"
-#    indir=$(dirname "$infile")
-#    outfile=$(echo $infile | sed "s/$IN/$OUT/g")
-#    outdir=$(echo $indir | sed "s/$IN/$OUT/g")
-
-#    mkdir -p $outdir
-#    convert $infile -auto-orient -resize 1000x1000 -gravity Center -crop 512x512+0+0 +repage $outfile;
-
-    echo $infile
-#    echo $infile $outfile $indir $outdir
-#}
-
-
-#!/bin/bash
 imgdir='/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Images'
 xmldir='/home/jmlich/workspace/fire/labelme/LabelMeAnnotationTool/Annotations'
 outdir='/var/www/html/fire/dataset-fire-labelme-cropped-Images'
@@ -59,13 +39,13 @@ while IFS= read -r -d $'\0' xml; do
     mkdir -p "$cmaskdirfull"
 
     if [ ! -f "$cmask" ]; then
-#        convert $mask -auto-orient -resize 1000x1000 -gravity Center -crop 512x512+0+0 +repage $cmask;
-        convert "$mask" -resize 512x512 "$cmask";
+#        convert "$mask" -auto-orient -interpolate nearest-neighbor -resize 1024x1024 -gravity Center -crop 512x512+0+0 +repage "$cmask";
+        convert "$mask" -interpolate nearest-neighbor -resize 512x512 "$cmask";
         msum=$((msum + 1))
     fi
 
     if [ ! -f "$out" ]; then
-#        convert $img -auto-orient -resize 1000x1000 -gravity Center -crop 512x512+0+0 +repage $out;
+#        convert "$img" -auto-orient -resize 1024x1024 -gravity Center -crop 512x512+0+0 +repage "$out";
         convert "$img" -resize 512x512 "$out";
         isum=$((isum + 1))
     fi
