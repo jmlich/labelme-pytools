@@ -24,6 +24,12 @@ while IFS= read -r -d $'\0' img; do
     cmask="$cmaskdir/${bname}.png"
     out="$outdir/${bname}.jpg"
 
+# FIXME: test this:
+#    if ! identify $img|grep -v "8-bit sRGB"; then
+#        echo "Image is grayscale"
+#        continue;
+#    fi
+
     if [ ! -f "$out" ]; then
 #        convert "$img" -auto-orient -resize 1024x1024 -gravity Center -crop 512x512+0+0 +repage "$out";
         convert "$img" -resize 512x512 "$out";
