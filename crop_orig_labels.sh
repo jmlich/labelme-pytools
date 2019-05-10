@@ -40,7 +40,7 @@ while IFS= read -r -d $'\0' xml; do
 
     if [ ! -f "$cmask" ]; then
 #        convert "$mask" -auto-orient -interpolate nearest-neighbor -resize 1024x1024 -gravity Center -crop 512x512+0+0 +repage "$cmask";
-        convert "$mask" -interpolate nearest-neighbor -resize 512x512 "$cmask";
+        convert "$mask" -sample 512x512 "$cmask";
         msum=$((msum + 1))
     fi
 

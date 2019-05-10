@@ -5,8 +5,11 @@ out_train="./train.txt"
 out_test="./test.txt"
 out_val="./val.txt"
 
-train_percent=50 # %
-test_percent=25 # %
+# cat ./blacklist.txt-bowfire-to-my |cut -d " " -f 2|sed 's|^/var/www/html/fire/dataset-fire-labelme-orig-Images/||'|sed 's|.jpg$||' > ./blacklist.txt
+blacklist_file=./blacklist.txt
+
+train_percent=70 # %
+test_percent=10 # %
 # val_percent=$(( 100 - train_percent - test_percent ))
 
 
@@ -34,6 +37,20 @@ if [ ! -f $out_all ]; then
         echo "$bname"
 
     done < <(find "$full_images" -type f -name '*.jpg' -print0) | sort -R > "$out_all"
+
+
+
+    # remove something from dataset
+    if [ -f "$blacklist_file" ]; then
+        while IFS=" " read fn; do
+            echo $fn
+            if [ -z $fn ]; then
+                continue;
+            fi
+
+            sed '\#'"$fn"'#d' -i "$out_all"
+        done < "$blacklist_file"
+    fi
 
 fi
 

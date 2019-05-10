@@ -6,8 +6,8 @@ maskdir='/var/www/html/fire/dataset-fire-labelme-mask'
 mkdir -p "$outdir"
 mkdir -p "$maskdir"
 
-rm -f "colors_mask.json"
-rm -f "colors.json"
+#rm -f "colors_mask.json"
+#rm -f "colors.json"
 
 sum=0
 sum_out=0
