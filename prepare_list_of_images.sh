@@ -39,7 +39,6 @@ if [ ! -f $out_all ]; then
     done < <(find "$full_images" -type f -name '*.jpg' -print0) | sort -R > "$out_all"
 
 
-
     # remove something from dataset
     if [ -f "$blacklist_file" ]; then
         while IFS=" " read fn; do
