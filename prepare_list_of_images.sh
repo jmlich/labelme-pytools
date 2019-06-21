@@ -5,7 +5,8 @@ out_train="./train.txt"
 out_test="./test.txt"
 out_val="./val.txt"
 
-# cat ./blacklist.txt-bowfire-to-my |cut -d " " -f 2|sed 's|^/var/www/html/fire/dataset-fire-labelme-orig-Images/||'|sed 's|.jpg$||' > ./blacklist.txt
+# cat ./blacklist.txt-bowfire-to-my |cut -d " " -f 2|sed 's|^/var/www/html/fire/dataset-fire-labelme-orig-Images/||'|sed 's|.jpg$||' > ./blacklist2.txt
+# cat ./tp.txt |sed 's|^.*/|---SUN---/|'|sed 's|.jpg$||' > ./blaclist3.txt
 blacklist_file=./blacklist.txt
 
 train_percent=70 # %
